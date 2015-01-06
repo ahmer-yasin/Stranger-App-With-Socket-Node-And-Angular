@@ -1,0 +1,22 @@
+<div class="chat">
+  <div class="hr"></div>
+  <div class="messages">
+    <div class="spacer"></div>
+    <div class="message" ng-repeat="message in messages">
+      <div class="nick"><span>{{message.author}}</span></div>
+      <div class="arrow"></div>
+      <div class="text {{message.author.toLowerCase()}}-text">
+        <p>{{message.text}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="status-message" class="current-status"></div>
+  <div class="input-area input-append">
+    <form ng-submit="say()">
+      <input id="chat-text-input" class="input-block-level" type="text" ng-model="enteredText" ng-required="true" maxlength="240" placeholder="Enter your chat message" autofocus="autofocus" autocomplete="off">
+      <button type="submit" class="btn">Send</button>
+      <button class="btn" ng-click="next()" type="button">Next</button>
+    </form>
+  </div>
+</div>

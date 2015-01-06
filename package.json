@@ -1,0 +1,10 @@
+{
+    "name": "socket-chat",
+    "version": "0.0.1",
+    "dependencies":{
+        "express":"*",
+        "socket.io":"*",
+        "validator": "1.2.x",
+        "jade"     : "*"
+        }
+}
