@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "dependencies":{
         "express":"*",
-        "socket.io":"*",
+        "socket.io":"0.10.29",
         "validator": "1.2.x",
         "jade"     : "*"
         }

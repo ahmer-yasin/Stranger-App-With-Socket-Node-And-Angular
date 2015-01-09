@@ -340,3 +340,6 @@ a {
     font-size: 14px;
     line-height: 160%;
 }
+#file{
+    display : none;
+}

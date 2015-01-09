@@ -16,9 +16,7 @@ app.config(function($routeProvider) {
                     redirectTo: '/'
         });
 });
-
-
-app.controller('ChatCtrl',function($scope) {
+app.controller('ChatCtrl',function($scope, $localstorage, $http, $location, data) {
     var appendMessage, isTyping, lastPress, sendMessage, socket, status;
     angular.element('.chat').fadeIn();
     status = 'offline';
@@ -64,6 +62,7 @@ app.controller('ChatCtrl',function($scope) {
             author: from,
             text: message
         });
+        $localstorage.setObject('text',$scope.messages);
         $('.messages').animate({
             scrollTop: $('.messages').prop('scrollHeight')
         }, {
@@ -109,6 +108,21 @@ app.controller('ChatCtrl',function($scope) {
     $scope.say = function() {
             sendMessage($scope.enteredText);
     };
+    $scope.get = function(){
+        $http.post('/createText',{'text':$localstorage.getObject('text')})
+            .success(function(sec){
+                console.log(sec);
+                data.set(sec.fileName);
+                $scope.file();
+            })
+            .error(function(err){
+                console.log(err);
+            })
+    }
+    $scope.file = function(){
+        var fileName = data.get();
+        document.getElementById('file').src = '/download/'+ fileName;
+    }
 });
 app.controller('HomeCtrl',function($scope, $location) {
     angular.element('html').css({
@@ -149,4 +163,35 @@ app.controller('HomeCtrl',function($scope, $location) {
             }
         });
     });
+})
+app.factory('$localstorage', ['$window', function($window) {
+    return {
+        set: function(key, value) {
+            $window.localStorage[key] = value;
+        },
+        get: function(key, defaultValue) {
+            return $window.localStorage[key] || defaultValue;
+        },
+        setObject: function(key, value) {
+            $window.localStorage[key] = JSON.stringify(value);
+        },
+        getObject: function(key) {
+            return JSON.parse($window.localStorage[key] || '{}');
+        }
+    }
+}])
+app.factory('data',function(){
+    var fileName = '';
+    var setName = function(name){
+        fileName = name;
+        console.log(fileName);
+    }
+    var getName = function(){
+        return fileName;
+    };
+
+    return{
+        set : setName,
+        get: getName
+    }
 })
