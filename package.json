@@ -5,6 +5,7 @@
         "express":"*",
         "socket.io":"0.10.29",
         "validator": "1.2.x",
-        "jade"     : "*"
+        "jade"     : "*",
+        "mime"     : "*"
         }
 }
